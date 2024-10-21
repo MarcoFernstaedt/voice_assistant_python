@@ -1,11 +1,9 @@
-from assistant.stt import listen_for_command
-from assistant.tts import speak
-from assistant.openai_integration import get_openai_response
+from assistant.spotify_integration import play_song
+# , pause_song, play_next, play_previous
 
-def process_command():
-    command = listen_for_command()
-    if command:
-        response = get_openai_response(command)
-        if response:
-            print('Assistant: ' + response)
-            speak(response)
+def handle_spotify_commands(command):
+    if 'play' in command:
+        song_name = command.replace('play', '').strip()
+        play_song(song_name)
+    else:
+        print('Spotify command not found')
