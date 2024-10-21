@@ -29,3 +29,14 @@ def play_song(song_name):
         sp.start_playback(uris=[track['uri']], device_id=os.getenv('SPOTIFY_DEVICE_ID'))
         print(f"Playing {track['name']} by {track['artists'][0]['name']}")
         
+def pause_song():
+    sp.pause_playback()
+    print('Paused')
+    
+def play_next():
+    sp.next_track()
+    print("Skipped to the next track.")
+
+def play_previous():
+    sp.previous_track()
+    print("Playing previous track.")
