@@ -1,6 +1,6 @@
 import speech_recognition as sr
 
-hot_word = 'sentinel'
+hot_word = 'aurora'
 
 def listen_for_hotword():
     recognizer = sr.Recognizer()
@@ -28,7 +28,7 @@ def listen_for_command():
         try:
             command = recognizer.recognize_google(audio)
             print(f"Recognized: {command}")
-            return command
+            return command.lower()
         except sr.UnknownValueError:
             print("Sorry, I didn't understand that.")
             return ""
