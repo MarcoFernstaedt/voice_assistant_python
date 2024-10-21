@@ -30,3 +30,6 @@ dist/
 
 # Ignore pytest cache
 .pytest_cache/
+
+#Ignore .cache file containing spotify access token
+.cache
