@@ -5,7 +5,7 @@ hot_word = 'aurora'
 def listen_for_hotword():
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Say 'Sentinel' to activate the assistant...")
+        print("Say 'Aurora' to activate the assistant...")
         while True:
             try:
                 audio = recognizer.listen(source)
