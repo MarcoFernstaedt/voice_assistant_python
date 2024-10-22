@@ -1,6 +1,11 @@
 import speech_recognition as sr
 import openai
+import logging
 import os
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 hot_word = 'aurora'
 
@@ -14,13 +19,13 @@ def listen_for_hotword():
                 command = recognize_with_openai(audio).lower()
 
                 if hot_word in command:
-                    print("Hotword detected: 'Aurora'")
+                    logger.info("Hotword detected: 'Aurora'")
                     return True  # Hotword detected, now listen for command
 
             except sr.UnknownValueError:
-                print("Listening...")
+                logger.info("Listening...")
             except sr.RequestError:
-                print("Could not request results; check your network connection.")
+                logger.error("Could not request results; check your network connection.")
 
 
 def recognize_with_openai(audio_data):
@@ -37,7 +42,7 @@ def recognize_with_openai(audio_data):
         )
         return transcription.text
     except Exception as e:
-        print(f"Error with OpenAI Whisper: {e}")
+        logger.error(f"Error with OpenAI Whisper: {e}")
         return ""
 
 def listen_for_command():
@@ -47,8 +52,8 @@ def listen_for_command():
         audio = recognizer.listen(source)
         try:
             command = recognize_with_openai(audio)
-            print(f"Recognized: {command}")
+            logger.info(f"Recognized: {command}")
             return command.lower()
         except Exception as e:
-            print(f"Error recognizing command: {e}")
+            logger.error(f"Error recognizing command: {e}")
             return ""
