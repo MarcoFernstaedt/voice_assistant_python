@@ -1,4 +1,6 @@
 import speech_recognition as sr
+import openai
+import os
 
 hot_word = 'aurora'
 
@@ -9,10 +11,10 @@ def listen_for_hotword():
         while True:
             try:
                 audio = recognizer.listen(source)
-                command = recognizer.recognize_google(audio).lower()
+                command = recognize_with_openai(audio).lower()
 
                 if hot_word in command:
-                    print("Hotword detected: 'Sentinal'")
+                    print("Hotword detected: 'Aurora'")
                     return True  # Hotword detected, now listen for command
 
             except sr.UnknownValueError:
@@ -20,18 +22,33 @@ def listen_for_hotword():
             except sr.RequestError:
                 print("Could not request results; check your network connection.")
 
+
+def recognize_with_openai(audio_data):
+    # Save audio to a file
+    with open("command.wav", "wb") as f:
+        f.write(audio_data.get_wav_data())
+
+    # Use OpenAI Whisper API for transcription
+    try:
+        audio_file = open("command.wav", "rb")
+        transcription = openai.audio.transcriptions.create(
+            model="whisper-1", 
+            file=audio_file
+        )
+        return transcription.text
+    except Exception as e:
+        print(f"Error with OpenAI Whisper: {e}")
+        return ""
+
 def listen_for_command():
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening for your command...")
         audio = recognizer.listen(source)
         try:
-            command = recognizer.recognize_google(audio)
+            command = recognize_with_openai(audio)
             print(f"Recognized: {command}")
             return command.lower()
-        except sr.UnknownValueError:
-            print("Sorry, I didn't understand that.")
-            return ""
-        except sr.RequestError:
-            print("Could not request results; check your network connection.")
+        except Exception as e:
+            print(f"Error recognizing command: {e}")
             return ""
