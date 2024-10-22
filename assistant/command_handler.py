@@ -1,5 +1,4 @@
-from assistant.spotify_integration import play_song, pause_song
-# , pause_song, play_next, play_previous
+from assistant.spotify_integration import play_song, pause_song, resume_track, play_next, play_previous
 
 def handle_spotify_commands(command):
     if "play" in command:
@@ -7,6 +6,8 @@ def handle_spotify_commands(command):
         play_song(song_name)
     elif "pause" in command:
         pause_song()
+    elif: 'resume' in command:
+        resume_track()
     elif "next" in command:
         play_next()
     elif "previous" in command:
