@@ -20,7 +20,6 @@ def list_devices():
             print(f"Device: {device['name']}, ID: {device['id']}")
     else:
         print("No active devices found.")
-list_devices()
 
 def play_song(song_name):
     results = sp.search(q=song_name, type='track', limit=1)
@@ -32,7 +31,11 @@ def play_song(song_name):
 def pause_song():
     sp.pause_playback()
     print('Paused')
-    
+
+def resume_track():
+    sp.start_playback()
+    print("Resuming playback.")
+
 def play_next():
     sp.next_track()
     print("Skipped to the next track.")
