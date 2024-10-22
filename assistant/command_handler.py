@@ -6,7 +6,7 @@ def handle_spotify_commands(command):
         play_song(song_name)
     elif "pause" in command:
         pause_song()
-    elif: 'resume' in command:
+    elif 'resume' in command:
         resume_track()
     elif "next" in command:
         play_next()
