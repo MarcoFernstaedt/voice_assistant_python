@@ -1,6 +1,6 @@
 import logging
 from assistant.stt import listen_for_hotword, listen_for_command  
-from assistant.openai_integration import get_openai_response
+from assistant.openai_integration import get_nova_response
 from assistant.tts import speak
 from assistant.command_handler import handle_spotify_commands
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
                         if 'spotify' in command:
                             handle_spotify_commands(command)
                         else:
-                            response = get_openai_response(command)  # Send command to OpenAI:
+                            response = get_nova_response(command)  # Send command to OpenAI:
                             if response:
                                 logger.info(f"Assistant response: {response}")
                                 speak(response)  # Speak the response
